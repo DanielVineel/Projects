@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake And Ladder</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f8ff;
+            text-align: center;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 40px;
+            margin-top: 20px;
+        }
+
+        .board {
+            display: grid;
+            grid-template-rows: repeat(10, 50px);
+            grid-template-columns: repeat(10, 50px);
+            background-image: url('https://i.pinimg.com/736x/65/9f/be/659fbe1eef9c8c46bc37fe656de6b04b.jpg');
+            background-size: cover;
+            border: 4px solid black;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .board div {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #player1, #player2 {
+            height: 30px;
+            width: 30px;
+            text-align: center;
+            line-height: 30px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+        }
+
+        #player1 { background-color: crimson; border-radius: 50%; }
+        #player2 { background-color: green; border-radius: 50%; }
+
+        .dice-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        #dice {
+            width: 100px;
+            height: 100px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #turnIndicator {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        #winnerMessage {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 28px;
+            box-shadow: 0px 0px 10px white;
+        }
+
+        .history-container {
+            margin-top: 20px;
+            width: 80%;
+            max-width: 600px;
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px gray;
+        }
+
+        .history-container h3 {
+            margin-bottom: 10px;
+        }
+
+        #history {
+            font-size: 18px;
+            font-weight: bold;
+            color: darkblue;
+            text-align: left;
+        }
+
+        #history hr {
+            border: 0;
+            height: 1px;
+            background: #ccc;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>🎲 Snake & Ladder Game 🎲</h1>
+
+    <div class="container">
+        <div class="board">
+            <script>
+                let c = 100;
+                for (let i = 10; i > 0; i--) {
+                    for (let j = 0; j < 10; j++) {
+                        if (i % 2 == 0) {
+                            document.write(`<div id="b-${c--}"></div>`);
+                        } else {
+                            document.write(`<div id="b-${c++}"></div>`);
+                        }
+                    }
+                    if (i % 2 == 0) {
+                        c -= 9;
+                    } else {
+                        c -= 11;
+                    }
+                }
+            </script>
+        </div>
+
+        <div class="dice-container">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Alea_1.png" id="dice">
+            <button id="rollDice" onclick="rolling()">Roll Dice</button>
+            <div id="turnIndicator">Player 1 Turn</div>
+        </div>
+    </div>
+
+    <div>
+        <div id="player1">P1</div>
+        <div id="player2">P2</div>
+    </div>
+
+    <div id="winnerMessage"></div>
+
+    <div class="history-container">
+        <h3>Dice History</h3>
+        <div id="history">No rolls yet</div>
+    </div>
+
+    <script>
+        let n1 = 0, n2 = 0, turn = 0;
+        let history = [];
+        let gameEnded = false;
+
+        let diceImages = [
+            "https://upload.wikimedia.org/wikipedia/commons/2/2c/Alea_1.png",
+            "https://upload.wikimedia.org/wikipedia/commons/b/b8/Alea_2.png",
+            "https://upload.wikimedia.org/wikipedia/commons/2/2f/Alea_3.png",
+            "https://upload.wikimedia.org/wikipedia/commons/8/8d/Alea_4.png",
+            "https://upload.wikimedia.org/wikipedia/commons/5/55/Alea_5.png",
+            "https://upload.wikimedia.org/wikipedia/commons/f/f4/Alea_6.png"
+        ];
+
+        let ladders = { 1: 38, 4: 14, 9: 31, 21: 42, 28: 84, 51: 67, 71: 91, 80: 100 };
+        let snakes = { 17: 7, 54: 34, 62: 19, 64: 60, 87: 24, 93: 73, 95: 75, 98: 79 };
+
+        // Sounds
+        const diceRollSound = new Audio('https://www.fesliyanstudios.com/play-mp3/387');
+        const ladderClimbSound = new Audio('https://cdn.pixabay.com/audio/2024/08/07/audio_c341b5dcee.mp3');
+        const snakeSlideSound = new Audio('https://cdn.pixabay.com/audio/2022/03/15/audio_67eb0cc18a.mp3');
+        const victorySound = new Audio('https://cdn.pixabay.com/audio/2025/01/31/audio_9c109b6115.mp3');
+
+        function rolling() {
+            if (gameEnded) return; 
+
+            diceRollSound.play();  // Play dice roll sound
+
+            let num = Math.floor(Math.random() * 6) + 1;
+            document.getElementById('dice').src = diceImages[num - 1];
+
+            let currentPlayer = turn % 2 === 0 ? "player1" : "player2";
+            let newPosition = (currentPlayer === "player1" ? n1 : n2) + num;
+
+            if (newPosition > 100) return;
+
+            if (ladders[newPosition]) {
+                newPosition = ladders[newPosition];
+                ladderClimbSound.play();  // Play ladder sound
+            } else if (snakes[newPosition]) {
+                newPosition = snakes[newPosition];
+                snakeSlideSound.play();  // Play snake sound
+            }
+
+            if (currentPlayer === "player1") n1 = newPosition;
+            else n2 = newPosition;
+
+            movePlayer(currentPlayer, newPosition);
+            updateHistory(currentPlayer, num, newPosition);
+
+            if (newPosition === 100) {
+                endGame(currentPlayer);
+                return;
+            }
+
+            if (num !== 6) turn++;
+
+            document.getElementById('turnIndicator').innerHTML = `Player ${turn % 2 === 0 ? "1" : "2"} Turn`;
+        }
+
+        function movePlayer(player, position) {
+            let piece = document.getElementById(player);
+            let targetBox = document.getElementById(`b-${position}`);
+            targetBox.appendChild(piece);
+        }
+
+        function updateHistory(player, roll, pos) {
+            history.unshift(`${player.toUpperCase()} rolled ${roll}, moved to ${pos} <hr>`);
+            document.getElementById('history').innerHTML = history.join("");
+        }
+
+        function endGame(winner) {
+            document.getElementById('winnerMessage').innerHTML = `🎉 ${winner.toUpperCase()} WINS! 🎉`;
+            document.getElementById('winnerMessage').style.display = 'block';
+            document.getElementById('rollDice').disabled = true;
+            victorySound.play();  // Play victory sound
+            gameEnded = true;
+        }
+    </script>
+</body>
+</html>
