@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Management with Drag and Drop</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        body {
+            background-color: #f4f8fb;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .main {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            flex-wrap:wrap;
+            row-gap: 30px;
+        }
+
+        .column {
+            height: 400px;
+            width: 280px;
+            border-radius: 8px;
+            overflow-y: auto;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .from ,.process,.to{
+           
+            border: 1px solid black;
+        }
+
+        .from div{
+            background-color:orangered;
+            border: 1px solid black;
+
+        }
+
+        .process div{
+            background-color: orange;
+            border: 1px solid black;
+        }
+
+        .to div{
+            background-color: greenyellow;
+            border: 1px solid black;
+        }
+
+        .column h4 {
+       
+            color: #333;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .column div {
+        
+            margin-top: 10px;
+            text-align: left;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        .column div:hover {
+            background-color: #d9fadf;
+        }
+
+    
+
+        input[type="text"] {
+            width: 250px;
+            padding: 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid black;
+            font-size: 16px;
+        }
+
+        input[type="button"] {
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="button"]:hover {
+            background-color: #31b0d5;
+        }
+
+        input[type="button"]#clear-btn {
+            background-color: #d9534f;
+        }
+
+        input[type="button"]#clear-btn:hover {
+            background-color: #c9302c;
+        }
+
+        .task-message {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .input-area {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="header">Task Management System</h2>
+
+        <div class="main">
+            <div class="column from" id="from">
+                <h4>To Do</h4>
+            </div>
+            <div class="column process" id="process">
+                <h4>Processing</h4>
+            </div>
+            <div class="column to" id="to">
+                <h4>Completed</h4>
+            </div>
+        </div>
+
+        <div class="input-area">
+            <input type="text" id="child" class="form-control d-inline-block" placeholder="Enter Task" onchange="process()">
+            <input type="button" value="Add Task" class="btn btn-primary" onclick="process()">
+            <input type="button" id="clear-btn" value="Clear All" class="btn" onclick="clearAll()">
+        </div>
+
+        <div id="task-message" class="task-message"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        let from = document.getElementById('from');
+        let process1 = document.getElementById('process');
+        let to = document.getElementById('to');
+        let taskMessage = document.getElementById('task-message');
+
+        function process() {
+            let taskValue = document.getElementById('child').value;
+            if (taskValue.trim() === "") return;
+
+            let ele = document.createElement('div');
+            ele.classList = "fa fa-close";
+            ele.innerHTML = "&nbsp;&nbsp;" + taskValue;
+            document.getElementById('child').value = '';
+
+            ele.setAttribute('draggable', 'true');
+            ele.addEventListener('dragstart', start);
+
+            from.appendChild(ele);
+        }
+
+        let tar = '';
+        function start(e) {
+            tar = e.target;
+        }
+
+        function dragging(e) {
+            e.preventDefault();
+        }
+
+        function stop1() {
+            tar.classList = "fa fa-check-square";
+            to.appendChild(tar);
+            taskMessage.innerHTML = "Task moved to Completed!";
+        }
+
+        function stop2() {
+            tar.classList = "fa fa-close";
+            from.appendChild(tar);
+            taskMessage.innerHTML = "Task moved back to To Do.";
+        }
+
+        function stop3() {
+            tar.classList = "fa fa-exclamation-triangle";
+            process1.appendChild(tar);
+            taskMessage.innerHTML = "Task is now in Processing.";
+        }
+
+        to.addEventListener('dragover', dragging);
+        to.addEventListener('drop', stop1);
+        from.addEventListener('dragover', dragging);
+        from.addEventListener('drop', stop2);
+        process1.addEventListener('dragover', dragging);
+        process1.addEventListener('drop', stop3);
+
+        function clearAll() {
+            from.innerHTML = "<h4>To Do</h4>";
+            process1.innerHTML = "<h4>Processing</h4>";
+            to.innerHTML = "<h4>Completed</h4>";
+            taskMessage.innerHTML = "";
+        }
+    </script>
+</body>
+</html>
