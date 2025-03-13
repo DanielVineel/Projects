@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character Analyzer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex justify-content-center align-items-center vh-100">
+
+    <div class="container text-center">
+        <h2 class="mb-4">Character Analyzer</h2>
+
+        <input type="text" id="textInput" class="form-control mb-3" placeholder="Enter text..." oninput="analyzeText()">
+        
+        <div class="alert alert-dark">
+            <strong>Total Characters:</strong> <span id="totalCount">0</span>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="alert alert-primary">Vowels: <strong id="vowelCount">0</strong></div>
+            </div>
+            <div class="col-md-3">
+                <div class="alert alert-success">Consonants: <strong id="consonantCount">0</strong></div>
+            </div>
+            <div class="col-md-3">
+                <div class="alert alert-warning">Numbers: <strong id="numberCount">0</strong></div>
+            </div>
+            <div class="col-md-3">
+                <div class="alert alert-danger">Special Characters: <strong id="specialCount">0</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function analyzeText() {
+            let input = document.getElementById("textInput").value;
+            let vowels = "AEIOUaeiou";
+            let numbers = "0123456789";
+
+            let vowelCount = 0, consonantCount = 0, numberCount = 0, specialCount = 0;
+
+            for (let char of input) {
+                if (vowels.includes(char)) {
+                    vowelCount++;
+                } else if (numbers.includes(char)) {
+                    numberCount++;
+                } else if (char.match(/[a-zA-Z]/)) {
+                    consonantCount++;
+                } else {
+                    specialCount++;
+                }
+            }
+
+            document.getElementById("totalCount").textContent = input.length;
+            document.getElementById("vowelCount").textContent = vowelCount;
+            document.getElementById("consonantCount").textContent = consonantCount;
+            document.getElementById("numberCount").textContent = numberCount;
+            document.getElementById("specialCount").textContent = specialCount;
+        }
+    </script>
+
+</body>
+</html>
