@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chess Game</title>
     <style>
+        body{
+            box-shadow: 0px 0px 12px 2px #020002;
+        }
         #header, #middle, #footer {
             border-bottom: 1px solid black;
             padding: 10px;
@@ -22,7 +25,8 @@
             grid-template-columns: repeat(8, 1fr);
             width: 415px;
             height: 415px;
-            
+            border: 2px solid black;
+            box-shadow: 0px 1px 6px 3px rgb(37 63 93) ;
         }
         .box {
             display: flex;
@@ -56,13 +60,18 @@
         #WhitePieces,#BlackPieces{
             display: flex;
             flex-wrap: wrap;
+            margin-left: 10%;
+    margin-right: 10%;
+    margin-top: 10px;
+    box-shadow: 0px 0px 3px 3px #d1cfc0;
         }
     </style>
 </head>
 <body>
     <div id="header">
-     <center> <h2>  Chess Game </h2></center>
+     <center> <h2 style="text-shadow: 1px 1px 2px darkgray;">  Chess Game </h2></center>
     </div>
+    <center> <h3>Player 2</h3></center>
     <div id="WhitePieces"></div>
     <hr>
     <div id="middle">
@@ -71,9 +80,10 @@
     </div>
     </div>
     <div id="BlackPieces"></div>
+    <center> <h3>Player 1</h3></center>
     <hr>
     <div id="footer">
-        Thank you for playing the game
+        <marquee><h4>Thank you for playing the game</h4></marquee>
     </div>
     </body>
     <script type="text/javascript">
@@ -101,7 +111,7 @@
                     if(click.from==null){
                         click.from=event.target;
                     }else{
-                       
+                      
                         if(click.availableOptions.includes(event.target) ){
                             click.to=event.target;
                             click.from.dataset.position=click.to.dataset.place;
@@ -195,7 +205,7 @@
                     let box=document.getElementById(`box-${alphabet[col]}${8 - row}`)
                     box.style.backgroundColor=''
                     if((row%2!=0 && col%2==0)||(row%2==0 && col%2!=0))
-                    box.style.backgroundColor='#eee'
+                    box.style.backgroundColor='#3f3b4f';
                 }
             }
         }
@@ -301,7 +311,7 @@
                     break;
                 }else{
                     click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number}`));
-                    (document.getElementById(`box-${alphabet[letterIndex]}${number}`)).style.backgroundColor="red"
+                    (document.getElementById(`box-${alphabet[letterIndex]}${number}`)).style.backgroundColor="#f5b50996"
                  }
 
                 
@@ -339,9 +349,8 @@
                             } else{
                                 
                                 click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number-1}`));
-                                (document.getElementById(`box-${alphabet[letterIndex]}${number-1}`)).style.backgroundColor="red"
+                                (document.getElementById(`box-${alphabet[letterIndex]}${number-1}`)).style.backgroundColor="#f5b50996"
                             }
-                            // (document.getElementById(`box-${alphabet[letterIndex]}${number-1}`)).style.backgroundColor="red"
 
                         }
                         if((number+1)<=8) //left-up
@@ -357,9 +366,8 @@
     
                             } else{
                                 click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number+1}`));
-                                (document.getElementById(`box-${alphabet[letterIndex]}${number+1}`)).style.backgroundColor="red"
+                                (document.getElementById(`box-${alphabet[letterIndex]}${number+1}`)).style.backgroundColor="#f5b50996"
                             }
-                            // (document.getElementById(`box-${alphabet[letterIndex]}${number+1}`)).style.backgroundColor="red"
                         }
                         
                     }
@@ -379,10 +387,9 @@
     
                             } else{
                                 click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number-1}`));
-                                (document.getElementById(`box-${alphabet[letterIndex]}${number-1}`)).style.backgroundColor="red"
+                                (document.getElementById(`box-${alphabet[letterIndex]}${number-1}`)).style.backgroundColor="#f5b50996"
                             }
 
-                            // (document.getElementById(`box-${alphabet[letterIndex]}${number-1}`)).style.backgroundColor="red"
                         }
                         if((number+1)<=8) //right-up
                         {
@@ -397,10 +404,9 @@
     
                             } else{
                                 click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number+1}`));
-                                (document.getElementById(`box-${alphabet[letterIndex]}${number+1}`)).style.backgroundColor="red"
+                                (document.getElementById(`box-${alphabet[letterIndex]}${number+1}`)).style.backgroundColor="#f5b50996"
                             }
 
-                            // (document.getElementById(`box-${alphabet[letterIndex]}${number+1}`)).style.backgroundColor="red"
                         }
                     }
                 }
@@ -420,9 +426,8 @@
     
                             } else{
                                 click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex-1]}${number}`));
-                                (document.getElementById(`box-${alphabet[letterIndex-1]}${number}`)).style.backgroundColor="red"
+                                (document.getElementById(`box-${alphabet[letterIndex-1]}${number}`)).style.backgroundColor="#f5b50996"
                             }
-                            // (document.getElementById(`box-${alphabet[letterIndex-1]}${number}`)).style.backgroundColor="red"
                         }
                         if((letterIndex+1)<=7) //down-right
                         {
@@ -437,9 +442,8 @@
     
                             } else{
                                 click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex+1]}${number}`));
-                                (document.getElementById(`box-${alphabet[letterIndex+1]}${number}`)).style.backgroundColor="red"
+                                (document.getElementById(`box-${alphabet[letterIndex+1]}${number}`)).style.backgroundColor="#f5b50996"
                             }
-                            // (document.getElementById(`box-${alphabet[letterIndex+1]}${number}`)).style.backgroundColor="red"
                         }
                     }
                 }else if(i==3){
@@ -458,9 +462,8 @@
     
                             } else{
                                 click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex-1]}${number}`));
-                                (document.getElementById(`box-${alphabet[letterIndex-1]}${number}`)).style.backgroundColor="red"
+                                (document.getElementById(`box-${alphabet[letterIndex-1]}${number}`)).style.backgroundColor="#f5b50996"
                             }
-                            // (document.getElementById(`box-${alphabet[letterIndex-1]}${number}`)).style.backgroundColor="red"
                         }
                         if((letterIndex+1)<=7) 
                         {
@@ -475,9 +478,8 @@
     
                             } else{
                                 click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex+1]}${number}`));
-                                (document.getElementById(`box-${alphabet[letterIndex+1]}${number}`)).style.backgroundColor="red"
+                                (document.getElementById(`box-${alphabet[letterIndex+1]}${number}`)).style.backgroundColor="#f5b50996"
                             }
-                            // (document.getElementById(`box-${alphabet[letterIndex+1]}${number}`)).style.backgroundColor="red"
                         }
                     
                     }
@@ -541,7 +543,7 @@
                         break;
                     }else{
                         click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number}`));
-                        (document.getElementById(`box-${alphabet[letterIndex]}${number}`)).style.backgroundColor="red"
+                        (document.getElementById(`box-${alphabet[letterIndex]}${number}`)).style.backgroundColor="#f5b50996"
                     }
 
                 }
@@ -615,7 +617,7 @@
                         
                     }else{
                         click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number}`));
-                        (document.getElementById(`box-${alphabet[letterIndex]}${number}`)).style.backgroundColor="red"
+                        (document.getElementById(`box-${alphabet[letterIndex]}${number}`)).style.backgroundColor="#f5b50996"
                     }
             }
 
@@ -703,7 +705,7 @@
                         break;
                     }else{
                         click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number}`));
-                        (document.getElementById(`box-${alphabet[letterIndex]}${number}`)).style.backgroundColor="red"
+                        (document.getElementById(`box-${alphabet[letterIndex]}${number}`)).style.backgroundColor="#f5b50996"
                     }
 
                 }
@@ -728,9 +730,9 @@
                     
                         if(!isPiecePresent){
                             click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number+1}`));
-                                (document.getElementById(`box-${alphabet[letterIndex]}${number+1}`)).style.backgroundColor="red"
+                                (document.getElementById(`box-${alphabet[letterIndex]}${number+1}`)).style.backgroundColor="#f5b50996"
                             click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number+2}`));
-                                (document.getElementById(`box-${alphabet[letterIndex]}${number+2}`)).style.backgroundColor="red"
+                                (document.getElementById(`box-${alphabet[letterIndex]}${number+2}`)).style.backgroundColor="#f5b50996"
                         }
                     }
 
@@ -741,7 +743,7 @@
                     
                     if(!isPiecePresent){
                         click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number+1}`));
-                        (document.getElementById(`box-${alphabet[letterIndex]}${number+1}`)).style.backgroundColor="red"
+                        (document.getElementById(`box-${alphabet[letterIndex]}${number+1}`)).style.backgroundColor="#f5b50996"
                     }
                     if(letterIndex-1>=0 ){
                         isPiecePresent=(document.getElementById(`box-${alphabet[letterIndex-1]}${number+1}`)).hasChildNodes()
@@ -763,7 +765,7 @@
                         if(isPiecePresent){
                             sameColor=((((document.getElementById(`box-${alphabet[letterIndex+1]}${number+1}`)).children[0]).dataset.color)==color)?true:false;
                             if(!sameColor){
-                                click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]+1}${number+1}`));
+                                click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex+1]}${number+1}`));
                                 (document.getElementById(`box-${alphabet[letterIndex+1]}${number+1}`)).style.backgroundColor="red"
                             }
                         }
@@ -780,9 +782,9 @@
                     
                             if(!isPiecePresent){
                                 click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number-1}`));
-                                (document.getElementById(`box-${alphabet[letterIndex]}${number-1}`)).style.backgroundColor="red"
+                                (document.getElementById(`box-${alphabet[letterIndex]}${number-1}`)).style.backgroundColor="#f5b50996"
                                 click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number-2}`));
-                                (document.getElementById(`box-${alphabet[letterIndex]}${number-2}`)).style.backgroundColor="red"
+                                (document.getElementById(`box-${alphabet[letterIndex]}${number-2}`)).style.backgroundColor="#f5b50996"
                             }
                         }
                     }
@@ -794,7 +796,7 @@
                     
                     if(!isPiecePresent){
                         click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number-1}`));
-                        (document.getElementById(`box-${alphabet[letterIndex]}${number-1}`)).style.backgroundColor="red"
+                        (document.getElementById(`box-${alphabet[letterIndex]}${number-1}`)).style.backgroundColor="#f5b50996"
                     }
                     if(letterIndex-1>=0 && (number-1)>=1){
                         isPiecePresent=(document.getElementById(`box-${alphabet[letterIndex-1]}${number-1}`)).hasChildNodes()
