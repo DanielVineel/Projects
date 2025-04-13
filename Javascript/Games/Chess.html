@@ -106,6 +106,17 @@
                                
                             };
                 }
+                function gameFinished(color){
+                    let finished=document.createElement('div');
+                    finished.innerHTML="<h2> "+color+" WIN</h2>"
+                                finished.style.height="100%";
+                                finished.style.width="100%";
+                                finished.style.position='fixed';
+                                finished.style.top="0px";
+                                finished.style.textAlign='center';
+                                finished.style.backgroundColor= 'aliceblue';
+                                document.body.appendChild(finished)
+                }
                 function myClick(event){
                    
                     if(click.from==null){
@@ -115,7 +126,30 @@
                         if(click.availableOptions.includes(event.target) ){
                             click.to=event.target;
                             click.from.dataset.position=click.to.dataset.place;
-                        
+                            
+
+                            if(event.target.hasChildNodes()){
+                               
+                                let killed=(event.target.children)[0]
+                                
+                             
+                            
+                                if(killed.dataset.color=='white'){
+                                if(killed.dataset.type=='king'){
+                                    gameFinished("Black")
+                               
+                            }
+                                (document.getElementById('WhitePieces')).appendChild(killed);
+                                killed=null;
+                            }else{
+                                if(killed.dataset.type=='king'){
+                                    gameFinished("White")
+                                   
+                                }
+                                (document.getElementById('BlackPieces')).appendChild(killed);
+                                killed=null;
+                            }
+                            }
                             (click.to).appendChild(click.from);
                             countMoves++;
                             resetClick();
@@ -123,35 +157,21 @@
                         }
                         else if( click.availableOptions.includes(event.target.parentElement) ){
                             let killed=event.target;
-                            let finished=document.createElement('div');
+                           
                             click.to=event.target.parentElement;
                             click.from.dataset.position=click.to.dataset.place;
                             (click.to).appendChild(click.from);
                             if(killed.dataset.color=='white'){
                                 if(killed.dataset.type=='king'){
-                    
-                                finished.innerHTML="<h2>BLACK WIN</h2>"
-                                finished.style.height="100%";
-                                finished.style.width="100%";
-                                finished.style.position='fixed';
-                                finished.style.top="0px";
-                                finished.style.textAlign='center';
-                                finished.style.backgroundColor= 'aliceblue';
-                                document.body.appendChild(finished)
+                                    gameFinished("Black")
+                               
                             }
                                 (document.getElementById('WhitePieces')).appendChild(killed);
                                 killed=null;
                             }else{
                                 if(killed.dataset.type=='king'){
-                    
-                                    finished.innerHTML="<h2>WHITE WIN</h2>"
-                                    finished.style.height="100%";
-                                    finished.style.width="100%";
-                                    finished.style.position='fixed';
-                                    finished.style.top="0px";
-                                    finished.style.textAlign='center';
-                                    finished.style.backgroundColor= 'aliceblue';
-                                    document.body.appendChild(finished)
+                                    gameFinished("White")
+                                   
                                 }
                                 (document.getElementById('BlackPieces')).appendChild(killed);
                                 killed=null;
@@ -167,13 +187,7 @@
                         }
                     }
 
-                    // let kings=document.getElementsByClassName('king');
-                    // for(let kings of king){
-
-                    //     if(click.availableOptions.includes(king)){
-    
-                    //     }
-                    // }
+                    
                     
                     
                 }
