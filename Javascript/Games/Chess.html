@@ -106,6 +106,62 @@
                                
                             };
                 }
+
+                function card(color,div){
+                    let choice = document.createElement('div');
+                    choice.style.position = "fixed";
+                    choice.style.left = "37%";
+                    choice.style.top = "37%";
+                    choice.style.backgroundColor = "#e5e7dd";
+                    choice.style.width = "220px";
+                    choice.style.height = "50px";
+
+                    choice.style.display="flex"
+                    choice.style.justifyContent="space-evenly"
+                    choice.style.padding="10px"
+
+                    choice.style.borderRadius="10px 10px 10px 10px";
+                    choice.style.boxShadow="0px 0px 5px 2px gray"
+
+                    let queen=document.createElement('div');
+                    queen.classList=color+"-queen piece queen "+color
+
+                    let bishop=document.createElement('div');
+                    bishop.classList=color+"-bishop piece bishop "+color
+
+                    let knight=document.createElement('div');
+                    knight.classList=color+"-knight piece knight "+color
+
+                    let rook=document.createElement('div');
+                    rook.classList=color+"-rook piece rook "+color
+
+                    queen.style.cursor = "pointer";
+                    bishop.style.cursor = "pointer";
+                    knight.style.cursor = "pointer";
+                    rook.style.cursor = "pointer";
+
+                    choice.appendChild(rook)
+                    choice.appendChild(knight)
+                    choice.appendChild(bishop)
+                    choice.appendChild(queen)
+
+                    let list=[queen,bishop,knight,rook]
+                    list.forEach(element => {
+                        element.addEventListener('click',(e)=>{
+                            document.body.removeChild(choice)
+                
+                           div.dataset.type=(element.classList)[2]
+                           div.classList=(element.classList)["value"]
+                           
+                        })
+                    });
+
+                    document.body.appendChild(choice);
+
+
+                }
+             
+
                 function gameFinished(color){
                     let finished=document.createElement('div');
                     finished.innerHTML="<h2> "+color+" WIN</h2>"
@@ -122,7 +178,7 @@
                     if(click.from==null){
                         click.from=event.target;
                     }else{
-                      
+                        
                         if(click.availableOptions.includes(event.target) ){
                             click.to=event.target;
                             click.from.dataset.position=click.to.dataset.place;
@@ -132,26 +188,33 @@
                                
                                 let killed=(event.target.children)[0]
                                 
-                             
                             
                                 if(killed.dataset.color=='white'){
-                                if(killed.dataset.type=='king'){
-                                    gameFinished("Black")
-                               
-                            }
-                                (document.getElementById('WhitePieces')).appendChild(killed);
-                                killed=null;
-                            }else{
-                                if(killed.dataset.type=='king'){
-                                    gameFinished("White")
-                                   
+                                    if(killed.dataset.type=='king'){
+                                        gameFinished("Black")
+                                    }
+                                    (document.getElementById('WhitePieces')).appendChild(killed);
+                                    killed=null;
+                                }else{
+                                    if(killed.dataset.type=='king'){
+                                        gameFinished("White")   
+                                    }
+                                    (document.getElementById('BlackPieces')).appendChild(killed);
+                                    killed=null;
                                 }
-                                (document.getElementById('BlackPieces')).appendChild(killed);
-                                killed=null;
-                            }
                             }
                             (click.to).appendChild(click.from);
                             countMoves++;
+
+                            if(click.from.dataset.type=='pawn' && click.from.dataset.color=='white' && (click.from.dataset.position).charAt(1)==8){
+                               card("white",click.from)
+                            }
+
+                            if(click.from.dataset.type=='pawn' && click.from.dataset.color=='black' && (click.from.dataset.position).charAt(1)==1){
+                                card("black",click.from)
+                            }
+
+
                             resetClick();
                             applyDefaultColors();
                         }
@@ -178,6 +241,15 @@
                             }
                             countMoves++;
 
+                            if(click.from.dataset.type=='pawn' && click.from.dataset.color=='white' && (click.from.dataset.position).charAt(1)==8){
+                               card("white",click.from)
+                            }
+
+                            if(click.from.dataset.type=='pawn' && click.from.dataset.color=='black' && (click.from.dataset.position).charAt(1)==1){
+                                card("black",click.from)
+                            }
+
+
                             resetClick();
                             applyDefaultColors();
                             
@@ -185,6 +257,10 @@
                             resetClick();
                             applyDefaultColors();
                         }
+
+
+
+
                     }
 
                     
