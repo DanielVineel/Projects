@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>To-Do List App</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      padding: 2rem;
+    }
+    .card {
+      margin-bottom: 1rem;
+    }
+    .form-inline input, .form-inline button {
+      margin: 0.25rem 0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h2 class="mb-4 text-center">📝 To-Do List</h2>
+
+  <div class="card p-4 mb-4">
+    <h4>Add New Task</h4>
+    <form id="taskForm">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <input type="text" id="title" class="form-control" placeholder="Task Title" required>
+        </div>
+        <div class="col-md-4">
+          <input type="text" id="description" class="form-control" placeholder="Description">
+        </div>
+        <div class="col-md-4">
+          <input type="datetime-local" id="datetime" class="form-control" required>
+        </div>
+        <div class="col-12 text-end">
+          <button type="submit" class="btn btn-primary">Add Task</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div id="taskList" class="row"></div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  let tasks = [];
+
+  const taskForm = document.getElementById('taskForm');
+  const taskList = document.getElementById('taskList');
+
+  taskForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    const title = document.getElementById('title').value.trim();
+    const description = document.getElementById('description').value.trim();
+    const datetime = document.getElementById('datetime').value;
+
+    if (title && datetime) {
+      const task = {
+        id: Date.now(),
+        title,
+        description,
+        datetime
+      };
+      tasks.push(task);
+      taskForm.reset();
+      renderTasks();
+    }
+  });
+
+  function renderTasks() {
+    taskList.innerHTML = '';
+    tasks.forEach(task => {
+      const col = document.createElement('div');
+      col.className = 'col-md-4';
+      col.innerHTML = `
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">${task.title}</h5>
+            <p class="card-text">${task.description || ''}</p>
+            <p><strong>Date & Time:</strong> ${new Date(task.datetime).toLocaleString()}</p>
+            <button class="btn btn-sm btn-warning me-2" onclick="editTask(${task.id})">Edit</button>
+          </div>
+        </div>
+      `;
+      taskList.appendChild(col);
+    });
+  }
+
+  function editTask(id) {
+    const task = tasks.find(t => t.id === id);
+    if (!task) return;
+
+    // Fill form with task data
+    document.getElementById('title').value = task.title;
+    document.getElementById('description').value = task.description;
+    document.getElementById('datetime').value = task.datetime;
+
+    // Remove the task temporarily
+    tasks = tasks.filter(t => t.id !== id);
+    renderTasks();
+  }
+</script>
+
+</body>
+</html>
