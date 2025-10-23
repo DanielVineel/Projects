@@ -1,0 +1,51 @@
+
+/* created by G Daniel Vineel */
+#inner-layer{
+    border:1px solid white;
+    height:300px;
+    
+    width:450px;
+    position: relative;
+    left: calc(50% - 200px);
+    border-radius: 25px;
+    background-color: rgba(245, 246, 248, 0.132);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    border-left: unset;
+    border-right: unset;
+    
+}
+
+h3{
+    text-align: center;
+    color:aqua;
+    font-size: larger;
+}
+
+.box{
+  
+    
+    width: 150px;
+    text-align: center;
+    border: 2px solid white;
+    height: 150px;
+    padding: 10px;
+    align-content: center;
+    font-size: large;
+    font-weight: 400;
+    color:rgb(240, 246, 246);
+    border-radius: 25px;
+    /* background-color: rgb(215, 228, 235); */
+    cursor: pointer;
+    transition: all 1s;
+      border-left: unset;
+    border-right: unset;
+}
+.box:hover{
+    /* box-shadow: 0px 0px 3px 2px rgb(225, 230, 234); */
+    /* border:1px solid rgb(158, 149, 149); */
+    text-decoration: underline;
+    scale:1.11;
+}

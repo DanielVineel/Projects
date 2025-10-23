@@ -1,0 +1,80 @@
+/*created by G Daniel Vineel*/
+form{
+   
+    
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 1px solid white;
+    border-left: 1px solid white;
+    border-right: 1px solid white;
+   
+    justify-content: center;
+    padding:10px;
+    border-radius:  25px;
+    background-color: rgba(240, 248, 255, 0.17);
+}
+form,#result{
+    position: relative;
+    height:200px;
+    top:calc(50% - 140px);
+    
+    left:calc(50% - 350px);
+    width:300px;
+    padding:10px;
+    border-radius:  25px;
+    background-color: rgba(240, 248, 255, 0.17);
+
+}
+form *{
+    margin:20px;
+    width:230px;
+}
+
+#exp{
+    border-radius: 23px;
+    height: 60px;
+    padding: 0px;
+}
+#sub{
+    width:200px;
+    height:50px;
+    border-radius: 20px;
+    background-color: rgb(124, 196, 201);
+    color:black;
+    font-size: large;
+    cursor: pointer;
+}
+form label{
+    width: unset;
+    height: unset;
+    margin: unset;
+    /* color:black; */
+    font-weight: 500;
+    font-size: large;
+}
+#result{
+    cursor: unset;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    overflow-x: hidden;
+    text-align: center;
+}
+#result *{
+    scrollbar-width: none;
+    height:22px;
+    border-radius: 10px;
+    margin-left:0.75%;
+    margin-top: 10px;
+    width:98%;
+    overflow-x: scroll;
+    text-align: center;
+    color:rgb(221, 232, 10);
+    overflow-y: hidden;
+    text-wrap: nowrap;
+    border:1px inset white;
+    padding:0.25%;
+}
+#outer-layer{
+    display: flex;
+    column-gap: 10px;
+}

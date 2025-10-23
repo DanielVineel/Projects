@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- created by G Daniel Vineel -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script> -->
+
+    <link rel="shortcut icon" href="{{ url_for('static',filename='images/coding-logo.png')}}" type="image/x-icon">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}" >
+    <link rel="stylesheet" href="{{url_for('static',filename='css/infix-postfix.css')}}" >
+    <script src="{{url_for('static',filename='js/homepage.js')}}"></script>
+
+
+
+    <title>Postfix To Infix Conversion</title>
+</head>
+<body>
+    <div id="outer-layer">
+
+        <form id="PostfixToInfix" method="post">
+            <label for="exp">Enter Postfix Expression :</label>
+            <input type="text" name="expression" id="exp">
+            <input type="submit" value="Convert" id="sub">
+        </form>
+        <div id="result">
+           OUTPUT :
+        </div>
+
+    </div>
+    <!-- created by G Daniel Vineel -->
+<div style="text-align: center;color:white;position: absolute;top: 50px;left:0px;width:100%;">NOTE : for unary minus use ~ instead - </div>
+</body>
+
+
+
+</html>
