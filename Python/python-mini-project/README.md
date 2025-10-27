@@ -36,3 +36,4 @@ Response → `a b + c *`
 ## 👨‍💻 Author
 **G. Daniel Vineel**  
 MIT License © 2025
+🛡️ All commits in this repository are GPG-signed to verify authentic authorship by G. Daniel Vineel.
