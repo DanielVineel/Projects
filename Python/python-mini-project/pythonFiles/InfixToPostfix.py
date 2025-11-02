@@ -175,6 +175,7 @@ class InfixExpression(InValidExpression):
 
 
     def getPostfixExpression(self):
+        print(self.getExpression())
         """returns postfix expression"""
        
         exp=(self.getExpression())
@@ -186,10 +187,7 @@ class InfixExpression(InValidExpression):
         for x in exp:
 
             if (x not in "+-*/()"):
-                if(x=="~"):
-                    res+="-"
-                else:
-                    res+=x
+                res+=x
             else:
                 res+=" "
                 if(x=="("):
@@ -204,8 +202,16 @@ class InfixExpression(InValidExpression):
                             res+=stack1.pop()+" "
 
                 elif((x in "/*" and stack1[-1] in "/*")  or (x in "+-" and stack1[-1] in "+-/*") ):
-                    res+=stack1.pop()+" "
+                    print(stack1,x)
+                    while(True):
+                        res+=stack1.pop()+" "
+                        if(x in "/*" and stack1[-1] not in "/*"):
+                            break
+                        elif(x in "+-" and stack1[-1] not in "+-/*"):
+                            break
                     stack1.append(x)
+                    print()
+                    print(stack1)
                 elif((x in "/*" and stack1[-1] not in "/*")or(x in "+-" and stack1[-1] =="(")):
                     stack1.append(x)
         
