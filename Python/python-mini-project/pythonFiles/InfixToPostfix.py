@@ -175,13 +175,13 @@ class InfixExpression(InValidExpression):
 
 
     def getPostfixExpression(self):
-        print(self.getExpression())
+        # print(self.getExpression())
         """returns postfix expression"""
        
         exp=(self.getExpression())
   
         exp="("+exp+")"
-        # print(exp)
+
         res=""
         stack1=[]
         for x in exp:
@@ -221,8 +221,3 @@ class InfixExpression(InValidExpression):
         return res
 
 
-# print(InfixExpression("(a*(a))").infixToPostfix())
-
-
-# work on brace should open before operator like +(),-(),*(),/()
-#  *- /-  change the symbols inside braces 
