@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chess Game</title>
+    <link rel="icon" type="image/jpeg" href="../../assets/logo.jpeg">
     <style>
         body{
             box-shadow: 0px 0px 12px 2px #020002;
@@ -13,12 +14,12 @@
             padding: 10px;
         }
         #middle{
-          
+
             display: flex;
             justify-content: space-around;
 
         }
-        
+
         #content {
             display: grid;
             grid-template-rows: repeat(8, 1fr);
@@ -67,7 +68,16 @@
         }
     </style>
 </head>
-<body>
+<body style="display: flex; flex-direction: column; min-height: 100vh; margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f9;">
+<header style="background-color: #ffffff; color: #2c3e50; padding: 1rem 2rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; width: 100%; box-sizing: border-box;">
+        <div style="display: flex; align-items: center;">
+            <a href="../../index.html"><img src="../../assets/logo.jpeg" alt="Logo" style="max-height: 40px;"></a>
+        </div>
+        <nav>
+            <a href="../../index.html" style="color: #2c3e50; text-decoration: none; margin: 0 15px; font-weight: bold;">Home</a>
+            <a href="../../Javascript/index.html" style="color: #2c3e50; text-decoration: none; margin: 0 15px; font-weight: bold;">Projects</a>
+        </nav>
+    </header>
     <div id="header">
      <center> <h2 style="text-shadow: 1px 1px 2px darkgray;">  Chess Game </h2></center>
     </div>
@@ -85,25 +95,29 @@
     <div id="footer">
         <marquee><h4>Thank you for playing the game</h4></marquee>
     </div>
-    </body>
+    <footer style="background-color: #2c3e50; color: #ecf0f1; text-align: center; padding: 2rem 0; margin-top: auto; width: 100%; box-sizing: border-box;">
+        <p style="margin: 0.5rem 0;">Daniel Vineel</p>
+        <p style="margin: 0.5rem 0;">Connect with me on LinkedIn: <a href="https://www.linkedin.com/in/danielvineel" target="_blank" style="color: #3498db; text-decoration: none; font-weight: bold;">linkedin.com/in/danielvineel</a></p>
+    </footer>
+</body>
     <script type="text/javascript">
-        
+
         const alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
         let countMoves=0;
         let click={
                     from:null,
                     to:null,
                     availableOptions:[],
-                   
+
 
                 };
-            
+
                 function resetClick(){
                     click={
                                 from:null,
                                 to:null,
                                 availableOptions:[],
-                               
+
                             };
                 }
 
@@ -149,10 +163,10 @@
                     list.forEach(element => {
                         element.addEventListener('click',(e)=>{
                             document.body.removeChild(choice)
-                
+
                            div.dataset.type=(element.classList)[2]
                            div.classList=(element.classList)["value"]
-                           
+
                         })
                     });
 
@@ -160,7 +174,7 @@
 
 
                 }
-             
+
 
                 function gameFinished(color){
                     let finished=document.createElement('div');
@@ -174,21 +188,21 @@
                                 document.body.appendChild(finished)
                 }
                 function myClick(event){
-                   
+
                     if(click.from==null){
                         click.from=event.target;
                     }else{
-                        
+
                         if(click.availableOptions.includes(event.target) ){
                             click.to=event.target;
                             click.from.dataset.position=click.to.dataset.place;
-                            
+
 
                             if(event.target.hasChildNodes()){
-                               
+
                                 let killed=(event.target.children)[0]
-                                
-                            
+
+
                                 if(killed.dataset.color=='white'){
                                     if(killed.dataset.type=='king'){
                                         gameFinished("Black")
@@ -197,7 +211,7 @@
                                     killed=null;
                                 }else{
                                     if(killed.dataset.type=='king'){
-                                        gameFinished("White")   
+                                        gameFinished("White")
                                     }
                                     (document.getElementById('BlackPieces')).appendChild(killed);
                                     killed=null;
@@ -220,21 +234,21 @@
                         }
                         else if( click.availableOptions.includes(event.target.parentElement) ){
                             let killed=event.target;
-                           
+
                             click.to=event.target.parentElement;
                             click.from.dataset.position=click.to.dataset.place;
                             (click.to).appendChild(click.from);
                             if(killed.dataset.color=='white'){
                                 if(killed.dataset.type=='king'){
                                     gameFinished("Black")
-                               
+
                             }
                                 (document.getElementById('WhitePieces')).appendChild(killed);
                                 killed=null;
                             }else{
                                 if(killed.dataset.type=='king'){
                                     gameFinished("White")
-                                   
+
                                 }
                                 (document.getElementById('BlackPieces')).appendChild(killed);
                                 killed=null;
@@ -252,7 +266,7 @@
 
                             resetClick();
                             applyDefaultColors();
-                            
+
                         }else{
                             resetClick();
                             applyDefaultColors();
@@ -263,16 +277,16 @@
 
                     }
 
-                    
-                    
-                    
+
+
+
                 }
 
         createBoxes(); createElements(); start();
 
         function createBoxes() {
             const container = document.getElementById('content');
-            
+
             for (let row = 0; row < 8; row++) {
                 for (let col = 0; col < 8; col++) {
                     const box = document.createElement('div');
@@ -300,7 +314,7 @@
             }
         }
 
-   
+
 
         function createElements() {
     // Define all pieces and their positions
@@ -355,20 +369,20 @@
 
 
         function moveRook(position,color) {
-           
-            let letter = position.charAt(0); 
-            let number = position.charAt(1); 
+
+            let letter = position.charAt(0);
+            let number = position.charAt(1);
             number=Number(number);
             let letterIndex = alphabet.indexOf(letter);
-           
+
             for(let i=0;i<4;i++){
-                letter = position.charAt(0); 
-                number = position.charAt(1); 
-                number=Number(number); 
+                letter = position.charAt(0);
+                number = position.charAt(1);
+                number=Number(number);
                 letterIndex = alphabet.indexOf(letter);
-     
+
                 while(true){
-              
+
                  if(i==0){  // left
                     letterIndex--;
                     if(letterIndex==-1){
@@ -404,24 +418,24 @@
                     (document.getElementById(`box-${alphabet[letterIndex]}${number}`)).style.backgroundColor="#f5b50996"
                  }
 
-                
+
                 }
             }
         }
 
         function moveKnight(position,color){
-            
-            let letter = position.charAt(0); 
+
+            let letter = position.charAt(0);
             let number = position.charAt(1);
-            number=Number(number); 
+            number=Number(number);
             let letterIndex = alphabet.indexOf(letter);
 
             for(let i=0;i<4;i++){
-                letter = position.charAt(0); 
-                number = position.charAt(1); 
-                number=Number(number); 
+                letter = position.charAt(0);
+                number = position.charAt(1);
+                number=Number(number);
                 letterIndex = alphabet.indexOf(letter);
-             
+
                 if(i==0){
                     letterIndex-=2;
                     if(letterIndex>=0){ // left
@@ -435,9 +449,9 @@
                                     click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number-1}`));
                                     (document.getElementById(`box-${alphabet[letterIndex]}${number-1}`)).style.backgroundColor="red"
                                 }
-    
+
                             } else{
-                                
+
                                 click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number-1}`));
                                 (document.getElementById(`box-${alphabet[letterIndex]}${number-1}`)).style.backgroundColor="#f5b50996"
                             }
@@ -453,13 +467,13 @@
                                     click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number+1}`));
                                     (document.getElementById(`box-${alphabet[letterIndex]}${number+1}`)).style.backgroundColor="red"
                                 }
-    
+
                             } else{
                                 click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number+1}`));
                                 (document.getElementById(`box-${alphabet[letterIndex]}${number+1}`)).style.backgroundColor="#f5b50996"
                             }
                         }
-                        
+
                     }
                 }else if(i==1){
                     letterIndex+=2;
@@ -474,7 +488,7 @@
                                     click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number-1}`));
                                     (document.getElementById(`box-${alphabet[letterIndex]}${number-1}`)).style.backgroundColor="red"
                                 }
-    
+
                             } else{
                                 click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number-1}`));
                                 (document.getElementById(`box-${alphabet[letterIndex]}${number-1}`)).style.backgroundColor="#f5b50996"
@@ -491,7 +505,7 @@
                                     click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number+1}`));
                                     (document.getElementById(`box-${alphabet[letterIndex]}${number+1}`)).style.backgroundColor="red"
                                 }
-    
+
                             } else{
                                 click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number+1}`));
                                 (document.getElementById(`box-${alphabet[letterIndex]}${number+1}`)).style.backgroundColor="#f5b50996"
@@ -513,7 +527,7 @@
                                     click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex-1]}${number}`));
                                     (document.getElementById(`box-${alphabet[letterIndex-1]}${number}`)).style.backgroundColor="red"
                                 }
-    
+
                             } else{
                                 click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex-1]}${number}`));
                                 (document.getElementById(`box-${alphabet[letterIndex-1]}${number}`)).style.backgroundColor="#f5b50996"
@@ -529,7 +543,7 @@
                                     click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex+1]}${number}`));
                                     (document.getElementById(`box-${alphabet[letterIndex+1]}${number}`)).style.backgroundColor="red"
                                 }
-    
+
                             } else{
                                 click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex+1]}${number}`));
                                 (document.getElementById(`box-${alphabet[letterIndex+1]}${number}`)).style.backgroundColor="#f5b50996"
@@ -539,7 +553,7 @@
                 }else if(i==3){
                     number+=2
                     if(number<=8){ // up
-                        if(letterIndex-1>=0) 
+                        if(letterIndex-1>=0)
                         {
                             let isPiecePresent=(document.getElementById(`box-${alphabet[letterIndex-1]}${number}`)).hasChildNodes()
                             let sameColor=false;
@@ -549,13 +563,13 @@
                                     click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex-1]}${number}`));
                                     (document.getElementById(`box-${alphabet[letterIndex-1]}${number}`)).style.backgroundColor="red"
                                 }
-    
+
                             } else{
                                 click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex-1]}${number}`));
                                 (document.getElementById(`box-${alphabet[letterIndex-1]}${number}`)).style.backgroundColor="#f5b50996"
                             }
                         }
-                        if((letterIndex+1)<=7) 
+                        if((letterIndex+1)<=7)
                         {
                             let isPiecePresent=(document.getElementById(`box-${alphabet[letterIndex+1]}${number}`)).hasChildNodes()
                             let sameColor=false;
@@ -565,13 +579,13 @@
                                     click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex+1]}${number}`));
                                     (document.getElementById(`box-${alphabet[letterIndex+1]}${number}`)).style.backgroundColor="red"
                                 }
-    
+
                             } else{
                                 click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex+1]}${number}`));
                                 (document.getElementById(`box-${alphabet[letterIndex+1]}${number}`)).style.backgroundColor="#f5b50996"
                             }
                         }
-                    
+
                     }
                 }
 
@@ -579,20 +593,20 @@
         }
 
         function moveBishop(position,color){
-          
-            let letter = position.charAt(0); 
-            let number = position.charAt(1); 
+
+            let letter = position.charAt(0);
+            let number = position.charAt(1);
             number=Number(number);
             let letterIndex = alphabet.indexOf(letter);
-           
+
             for(let i=0;i<4;i++){
-                letter = position.charAt(0); 
-                number = position.charAt(1); 
-                number=Number(number); 
+                letter = position.charAt(0);
+                number = position.charAt(1);
+                number=Number(number);
                 letterIndex = alphabet.indexOf(letter);
-              
+
                 while(true){
-                    if(i==0){ // left - down  
+                    if(i==0){ // left - down
                         if(number-1>=1 && letterIndex-1>=0){
                             --letterIndex;
                             --number;
@@ -600,7 +614,7 @@
                             break;
                         }
                     }else if(i==1){ // right-down
-                        
+
                         if(number-1>=1 && (letterIndex+1)<=7){
                             ++letterIndex;
                             --number;
@@ -637,25 +651,25 @@
                     }
 
                 }
-                
+
             }
-     
+
 
         }
 
         function moveKing(position,color){
-          
-            let letter = position.charAt(0); 
-            let number = position.charAt(1); 
+
+            let letter = position.charAt(0);
+            let number = position.charAt(1);
             number=Number(number);
             let letterIndex = alphabet.indexOf(letter);
-           
+
             for(let i=0;i<8;i++){
-                letter = position.charAt(0); 
-                number = position.charAt(1); 
-                number=Number(number); 
+                letter = position.charAt(0);
+                number = position.charAt(1);
+                number=Number(number);
                 letterIndex = alphabet.indexOf(letter);
-             
+
                 if(i==0){ //left
                     if(letterIndex-1>=0){
                         letterIndex-=1;
@@ -704,7 +718,7 @@
                             click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number}`));
                             (document.getElementById(`box-${alphabet[letterIndex]}${number}`)).style.backgroundColor="red"
                         }
-                        
+
                     }else{
                         click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number}`));
                         (document.getElementById(`box-${alphabet[letterIndex]}${number}`)).style.backgroundColor="#f5b50996"
@@ -714,22 +728,22 @@
         }
 
         function moveQueen(position,color){
-          
-            let letter = position.charAt(0); 
-            let number = position.charAt(1); 
+
+            let letter = position.charAt(0);
+            let number = position.charAt(1);
             number=Number(number);
             let letterIndex = alphabet.indexOf(letter);
-           
+
             for(let i=0;i<8;i++){
-                letter = position.charAt(0); 
-                number = position.charAt(1); 
-                number=Number(number); 
+                letter = position.charAt(0);
+                number = position.charAt(1);
+                number=Number(number);
                 letterIndex = alphabet.indexOf(letter);
 
-              
+
                 while(true){
                     //BISHOP
-                    if(i==0){ // left - down  
+                    if(i==0){ // left - down
                         if(number-1>=1 && letterIndex-1>=0){
                             --letterIndex;
                             --number;
@@ -737,7 +751,7 @@
                             break;
                         }
                     }else if(i==1){ // right-down
-                        
+
                         if(number-1>=1 && (letterIndex+1)<=7){
                             ++letterIndex;
                             --number;
@@ -779,10 +793,10 @@
                             if(number==9){
                                 break;
                             }
-                        
 
-                      
-                        
+
+
+
                     }
                     let isPiecePresent=(document.getElementById(`box-${alphabet[letterIndex]}${number}`)).hasChildNodes()
                     let sameColor=false;
@@ -804,20 +818,20 @@
         }
 
         function movePawn(position,color){
-          
-            let letter = position.charAt(0); 
-            let number = position.charAt(1); 
+
+            let letter = position.charAt(0);
+            let number = position.charAt(1);
             number=Number(number);
             let letterIndex = alphabet.indexOf(letter);
 
             if(color=='white'){
-                
+
                 if(number==2){
                     let isPiecePresent=(document.getElementById(`box-${alphabet[letterIndex]}${number+2}`)).hasChildNodes()
                     let sameColor=false;
                     if(!isPiecePresent){
                         isPiecePresent=(document.getElementById(`box-${alphabet[letterIndex]}${number+1}`)).hasChildNodes()
-                    
+
                         if(!isPiecePresent){
                             click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number+1}`));
                                 (document.getElementById(`box-${alphabet[letterIndex]}${number+1}`)).style.backgroundColor="#f5b50996"
@@ -830,7 +844,7 @@
                 }
                 if((number+1)<=8){
                     let isPiecePresent=(document.getElementById(`box-${alphabet[letterIndex]}${number+1}`)).hasChildNodes()
-                    
+
                     if(!isPiecePresent){
                         click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number+1}`));
                         (document.getElementById(`box-${alphabet[letterIndex]}${number+1}`)).style.backgroundColor="#f5b50996"
@@ -840,13 +854,13 @@
                         sameColor=false;
 
                         if(isPiecePresent){
-                           
+
                                 sameColor=((((document.getElementById(`box-${alphabet[letterIndex-1]}${number+1}`)).children[0]).dataset.color)==color)?true:false;
                                 if(!sameColor){
                                     click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex-1]}${number+1}`));
                                     (document.getElementById(`box-${alphabet[letterIndex-1]}${number+1}`)).style.backgroundColor="red"
-                                } 
-                            
+                                }
+
                           }
                     }
                     if( letterIndex+1<=7 ){
@@ -869,7 +883,7 @@
                         let isPiecePresent=(document.getElementById(`box-${alphabet[letterIndex]}${number-2}`)).hasChildNodes()
                         if(!isPiecePresent){
                              isPiecePresent=(document.getElementById(`box-${alphabet[letterIndex]}${number-1}`)).hasChildNodes()
-                    
+
                             if(!isPiecePresent){
                                 click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number-1}`));
                                 (document.getElementById(`box-${alphabet[letterIndex]}${number-1}`)).style.backgroundColor="#f5b50996"
@@ -883,7 +897,7 @@
                 }
                 if((number-1)>=1){
                     let isPiecePresent=(document.getElementById(`box-${alphabet[letterIndex]}${number-1}`)).hasChildNodes()
-                    
+
                     if(!isPiecePresent){
                         click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex]}${number-1}`));
                         (document.getElementById(`box-${alphabet[letterIndex]}${number-1}`)).style.backgroundColor="#f5b50996"
@@ -896,10 +910,10 @@
                             if(!sameColor){
                                 click.availableOptions.push(document.getElementById(`box-${alphabet[letterIndex-1]}${number-1}`));
                                 (document.getElementById(`box-${alphabet[letterIndex-1]}${number-1}`)).style.backgroundColor="red"
-                            } 
+                            }
                         }
                     }
-                   
+
                     if( (letterIndex+1)<=7  && (number-1)>=1){
                         isPiecePresent=(document.getElementById(`box-${alphabet[(letterIndex+1)]}${number-1}`)).hasChildNodes()
                         sameColor=false;
@@ -916,9 +930,9 @@
 
                 }
             }
-        
+
             function allowAccess(event){
-                
+
                     if(event.target.dataset.type=='rook'){
                         moveRook(event.target.dataset.position,event.target.dataset.color);
                     }else if(event.target.dataset.type=='knight'){
@@ -937,12 +951,12 @@
                         movePawn(event.target.dataset.position,event.target.dataset.color)
                     }
             }
-            
+
         function start(){
             let piece=document.getElementsByClassName('piece')
-           
+
             for(let ele of piece){
-              
+
                 ele.addEventListener('click',(event)=>{
                     if(countMoves%2==0){
                         if(event.target.dataset.color=='white'){
@@ -953,12 +967,12 @@
                             allowAccess(event)
                         }
                     }
-                   
+
                 })
             }
-                
-         
-            
+
+
+
         }
 
 
